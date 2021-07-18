@@ -1,0 +1,56 @@
+server:
+  port: 4000
+
+spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  jpa:
+    open-in-view: true
+    properties:
+      hibernate:
+        show_sql: ${debug-jpa-sql}
+        format_sql: true
+  datasource:
+    continue-on-error: true
+    name: "card-cost-main"
+    platform: postgres
+    url: jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.db}
+    username: ${datasource.username}
+    password: ${datasource.password}
+    hikari:
+      pool-name: "main-db-connection-pool"
+      connection-timeout: 1000 # 1 sec
+      max-lifetime: 900000 # 15 mins
+      minimum-idle: 2
+      maximum-pool-size: 5
+      idle-timeout: 300000 # 5 mins
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    com.ninos.: ${logging.level}
+    org.springframework.web.: INFO
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS,Europe/Athens} [%thread] %clr(%-5level) %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+  endpoint:
+    health:
+      enabled: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /docs
+  swagger-ui:
+    csrf:
+      enabled: true
+    tags-sorter: alpha
+  writer-with-default-pretty-printer: true

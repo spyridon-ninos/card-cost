@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.4.RELEASE</version>
+	</parent>
+
+	<groupId>com.ninos</groupId>
+	<artifactId>card-cost</artifactId>
+	<version>1.0.0</version>
+	<name>interview-project</name>
+	<description>This is the Card Cost API, an application that implements a card costing functionality</description>
+
+	<properties>
+		<java.version>14</java.version>
+		<commons-validator.version>1.7</commons-validator.version>
+		<spring-security-test.version>5.4.0</spring-security-test.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
+		<springdoc-openapi-ui.version>1.4.8</springdoc-openapi-ui.version>
+		<ehcache3.version>3.9.0</ehcache3.version>
+		<bucket4j-core.version>4.10.0</bucket4j-core.version>
+		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+		<owasp-dependency-check.version>6.0.2</owasp-dependency-check.version>
+		<h2.version>1.4.200</h2.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>${spring-security-test.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${ehcache3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${commons-validator.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${validation-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.vladimir-bukhtoyarov</groupId>
+			<artifactId>bucket4j-core</artifactId>
+			<version>${bucket4j-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-security</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire-plugin.version}</version>
+				<configuration>
+					<argLine>--enable-preview</argLine>
+					<excludes>
+						<exclude>**/*IT.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${surefire-plugin.version}</version>
+				<configuration>
+					<argLine>--enable-preview</argLine>
+					<excludes>
+						<exclude>**/*Test.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${owasp-dependency-check.version}</version>
+				<configuration>
+					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+					<swiftPackageManagerAnalyzerEnabled>false</swiftPackageManagerAnalyzerEnabled>
+					<bundleAuditAnalyzerEnabled>false</bundleAuditAnalyzerEnabled>
+					<cocoapodsAnalyzerEnabled>false</cocoapodsAnalyzerEnabled>
+					<nugetconfAnalyzerEnabled>false</nugetconfAnalyzerEnabled>
+					<nuspecAnalyzerEnabled>false</nuspecAnalyzerEnabled>
+					<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+					<composerAnalyzerEnabled>false</composerAnalyzerEnabled>
+					<pipAnalyzerEnabled>false</pipAnalyzerEnabled>
+					<cmakeAnalyzerEnabled>false</cmakeAnalyzerEnabled>
+					<autoconfAnalyzerEnabled>false</autoconfAnalyzerEnabled>
+					<rubygemsAnalyzerEnabled>false</rubygemsAnalyzerEnabled>
+					<pyPackageAnalyzerEnabled>false</pyPackageAnalyzerEnabled>
+					<pyDistributionAnalyzerEnabled>false</pyDistributionAnalyzerEnabled>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

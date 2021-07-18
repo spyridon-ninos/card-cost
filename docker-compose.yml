@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  card_cost_db:
+    image: bitnami/postgresql:12.4.0
+    container_name: card_cost_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRESQL_PASSWORD: "password"
+    volumes:
+      - ./src/test/resources/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./src/test/resources/data.sql:/docker-entrypoint-initdb.d/2-data.sql
+    logging:
+      driver: none
+
+  card_cost:
+    build: .
+    image: card_cost
+    container_name: card_cost
+    ports:
+      - "4000:4000"
+    depends_on:
+      - card_cost_db
+    environment:
+      POSTGRES_HOST: card_cost_db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: card_cost_db
+      DATASOURCE_USERNAME: card_cost_user
+      DATASOURCE_PASSWORD: password
+      LOGGING_LEVEL: INFO
+      DEBUGJPASQL: "true"
+    volumes:
+      - ./src/test/resources/run.sh:/run.sh
+    command: ["sh", "-c", "/run.sh"]
